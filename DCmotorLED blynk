@@ -1,0 +1,42 @@
+#define BLYNK_TEMPLATE_ID "TMPL6VKS1Rn55"
+#define BLYNK_TEMPLATE_NAME "DCmotorLED"
+#define BLYNK_AUTH_TOKEN "E5mbnhFXwg4cTochGXWTms_8ZALT_ajr"
+
+#define BLYNK_PRINT Serial
+#include <ESP8266WiFi.h>
+#include <BlynkSimpleEsp8266.h>
+
+char auth[] = "E5mbnhFXwg4cTochGXWTms_8ZALT_ajr";
+char ssid[] = "A"; //Your WiFi
+char pass[] = "12345678"; //password WiFi
+
+int MotorL = D2;
+int MotorR = D3;
+int MotorPWM = D4;
+
+void setup() {
+  Serial.begin(9600);
+  Blynk.begin(auth,ssid,pass);
+  pinMode(MotorL,OUTPUT);
+  pinMode(MotorR,OUTPUT);
+  pinMode(MotorPWM,OUTPUT);
+  pinMode(D5,OUTPUT);
+}
+
+BLYNK_WRITE(V0){
+  int button1 = param.asInt();
+  if (button1==0){
+    analogWrite(MotorPWM,0);
+    digitalWrite(D5,0);  
+  }
+  else{
+    analogWrite(MotorPWM, 1000);
+    digitalWrite(D5,1);  
+  }
+}
+
+void loop() {
+  digitalWrite(MotorL, 0);
+  digitalWrite(MotorR, 1);
+  Blynk.run();
+}
