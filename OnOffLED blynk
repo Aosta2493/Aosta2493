@@ -1,0 +1,35 @@
+#define BLYNK_TEMPLATE_ID "TMPL648kJX7Ud"
+#define BLYNK_TEMPLATE_NAME "OnOffLED"
+#define BLYNK_AUTH_TOKEN "5TngL71-UOl-lsX7JC4tu_oMzwRHeQQS"
+
+#define BLYNK_PRINT Serial
+#include <ESP8266WiFi.h>
+#include <BlynkSimpleEsp8266.h>
+
+char auth[] = "5TngL71-UOl-lsX7JC4tu_oMzwRHeQQS";
+char ssid[] = "A"; //Your WiFi
+char pass[] = "12345678"; //password WiFi
+
+int ledGreen = D1;
+int ledRed = D2;
+
+void setup() {
+  Serial.begin(9600);
+  Blynk.begin(auth,ssid,pass);
+  pinMode(ledGreen,OUTPUT);
+  pinMode(ledRed,OUTPUT);
+}
+
+void loop() {
+  Blynk.run();
+}
+
+BLYNK_WRITE(V0){
+  int led1State = param.asInt();
+  digitalWrite(ledGreen, led1State);  
+}
+
+BLYNK_WRITE(V1){
+  int led2State = param.asInt();
+  digitalWrite(ledRed, led2State);  
+}
