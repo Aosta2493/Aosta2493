@@ -1,0 +1,31 @@
+#include "DHT.h"
+#define DHTPIN D1
+#define DHTTYPE DHT22
+DHT dhtSS(DHTPIN, DHTTYPE);
+float humid = 0; //ค่าความชื้น
+float temp = 0; //ค่าอุณหภูมิ
+void setup() 
+{
+  Serial.begin(9600);
+  dhtSS.begin(); //initialize โมดูล DHT
+  pinMode(D1,INPUT);
+  pinMode(D5,OUTPUT);
+}
+void loop() 
+{
+          humid = dhtSS.readHumidity(); //อ่านค่าความชื้น
+          temp = dhtSS.readTemperature(); //อ่านค่าอุณหภูมิ
+          Serial.print("Humid: ");
+          Serial.print(humid);
+          Serial.println(" %, ");
+          Serial.print("Temp: ");
+          Serial.print(temp);
+          Serial.println(" C ");
+          if (temp>29){
+            digitalWrite(D5,1);
+          }
+          else{
+            digitalWrite(D5,0);
+          }
+          delay(2000);
+}
