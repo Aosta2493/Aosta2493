@@ -1,0 +1,24 @@
+int val = 0;
+void setup() {
+  pinMode(D5,OUTPUT); //ไฟLED
+  pinMode(D4,OUTPUT); //ลำโพง
+  pinMode(D1,INPUT); //โมดูลตรวจจับ
+  Serial.begin(9600);
+}
+
+void loop() {
+  val = digitalRead(D1);
+  Serial.print("val = ");
+  Serial.println(val);
+  if (val == 1) {
+    digitalWrite(D5, HIGH);
+    tone(D4,600);
+    Serial.println("Motion!");
+  }
+  else{
+    digitalWrite(D5, LOW);
+    noTone(D4);
+    Serial.println("Not Motion");
+  }
+  delay(500);
+}
