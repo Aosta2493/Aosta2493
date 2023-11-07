@@ -2,8 +2,8 @@ void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
   pinMode(D1,OUTPUT);
-  pinMode(D7,OUTPUT);
-  pinMode(D4,OUTPUT);
+  pinMode(D7,OUTPUT); // LED GREEN
+  pinMode(D4,OUTPUT); // LED RED
   pinMode(D5,INPUT);
 }
 
