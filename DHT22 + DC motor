@@ -1,0 +1,44 @@
+#include "DHT.h"
+
+#define DHTPIN D5
+#define DHTTYPE DHT22
+DHT dhtSS(DHTPIN, DHTTYPE);
+
+float humid = 0; //ค่าความชื้น
+float temp = 0; //ค่าอุณหภูมิ
+
+int MotorL = D1; 
+int MotorR = D2;
+int MotorPWM = D3;
+
+void setup() 
+{
+  Serial.begin(9600);
+  dhtSS.begin(); //initialize โมดูล DHT
+  pinMode(MotorL,OUTPUT);
+  pinMode(MotorR,OUTPUT);
+  pinMode(MotorPWM,OUTPUT);
+  pinMode(D5,INPUT);
+}
+void loop() 
+{
+  digitalWrite(MotorL,1);
+  digitalWrite(MotorR,0);
+  humid = dhtSS.readHumidity(); //อ่านค่าความชื้น
+  temp = dhtSS.readTemperature(); //อ่านค่าอุณหภูมิ
+  if (temp>28){
+    analogWrite(MotorPWM,1000); //analogWrite ปรับความเร็วพัดลม
+    Serial.print("Temp=");
+    Serial.print(temp);
+    Serial.print(" ---> ");
+    Serial.println("Hot and Open Fan");
+  }
+  else{
+    analogWrite(MotorPWM,0); //analogWrite ปรับความเร็วพัดลม
+    Serial.print("Temp=");
+    Serial.print(temp);
+    Serial.print(" ---> ");
+    Serial.println("Cool and Stop Fan");
+  }
+  delay(1000);
+}
